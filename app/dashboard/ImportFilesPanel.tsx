@@ -7,7 +7,7 @@ import {
   type FileAnalysis,
   type FileAnalysisCategory,
 } from "./importFileAnalysis";
-import { dashboardTokens } from "./dashboardTheme";
+import { accentBtn, dashboardTokens } from "./dashboardTheme";
 
 type ImportRow = {
   id: string;
@@ -144,12 +144,12 @@ export function ImportFilesPanel({ lightMode = false }: { lightMode?: boolean })
 
       <div className="grid md:grid-cols-2 gap-4">
         <div className={`${th.kpiCard} flex flex-col gap-3`}>
-          <p className={`text-xs font-mono uppercase tracking-widest ${th.kpiLabel}`}>Queue</p>
+          <p className={`text-xs font-medium tracking-wide ${th.kpiLabel}`}>Queue</p>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
-              className="inline-flex items-center gap-2 rounded-lg border border-[#39d98a]/35 bg-[#39d98a]/10 px-3 py-2 text-xs font-semibold text-[#39d98a] hover:bg-[#39d98a]/15 transition-colors"
+              className={`${accentBtn} px-3`}
             >
               Choose files
             </button>
@@ -235,7 +235,7 @@ export function ImportFilesPanel({ lightMode = false }: { lightMode?: boolean })
         </div>
 
         <div className={`${th.kpiCard} flex flex-col min-h-[200px]`}>
-          <p className={`text-xs font-mono uppercase tracking-widest ${th.kpiLabel} mb-2`}>Classifier</p>
+          <p className={`text-xs font-medium tracking-wide ${th.kpiLabel} mb-2`}>Classifier</p>
           <ul className={`text-xs ${th.bodyTextSoft} space-y-1.5 flex-1`}>
             <li>
               <span className={th.bodyText}>Archives:</span> .zip (entry listing), .gz / .tgz (inflate preview
@@ -265,7 +265,7 @@ export function ImportFilesPanel({ lightMode = false }: { lightMode?: boolean })
         <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-4 items-start">
           <div className={`${th.codeBlock} max-h-[min(52vh,560px)] flex flex-col`}>
             <div className={`px-3 py-2 ${th.codeBlockHead} flex items-center justify-between gap-2 shrink-0`}>
-              <span className={`text-xs font-mono uppercase tracking-widest ${th.kpiLabel}`}>
+              <span className={`text-xs font-medium tracking-wide ${th.kpiLabel}`}>
                 Staged files
               </span>
               <span className={`text-xs font-mono ${th.footNote}`}>{rows.length}</span>
@@ -297,7 +297,7 @@ export function ImportFilesPanel({ lightMode = false }: { lightMode?: boolean })
                       {row.error && <p className="text-xs text-red-400/90 mt-1">{row.error}</p>}
                       {a && (
                         <span
-                          className={`inline-flex mt-1.5 text-xs font-mono uppercase tracking-wider px-2 py-0.5 rounded border ${CATEGORY_STYLES[a.category]}`}
+                          className={`inline-flex mt-1.5 text-xs font-medium tracking-wide px-2 py-0.5 rounded border ${CATEGORY_STYLES[a.category]}`}
                         >
                           {a.category.replace(/_/g, " ")}
                         </span>
@@ -309,13 +309,13 @@ export function ImportFilesPanel({ lightMode = false }: { lightMode?: boolean })
             </ul>
           </div>
 
-          <div className="rounded-xl border border-white/[.08] bg-[#05080b] overflow-hidden flex flex-col min-h-[280px] max-h-[min(52vh,560px)]">
-            <div className="px-3 py-2 border-b border-white/[.06] flex items-center justify-between gap-2 shrink-0">
-              <span className="text-xs font-mono uppercase tracking-widest text-zinc-500">
+          <div className={`${th.codeBlock} flex flex-col min-h-[280px] max-h-[min(52vh,560px)]`}>
+            <div className={`px-3 py-2 ${th.codeBlockHead} flex items-center justify-between gap-2 shrink-0`}>
+              <span className={`text-xs font-medium tracking-wide ${th.kpiLabel}`}>
                 Content preview
               </span>
               {selected?.analysis && (
-                <span className="text-xs font-mono text-zinc-600 truncate">
+                <span className={`text-xs font-mono ${th.footNote} truncate`}>
                   {formatBytes(selected.analysis.size)}
                 </span>
               )}
@@ -329,12 +329,12 @@ export function ImportFilesPanel({ lightMode = false }: { lightMode?: boolean })
             ) : selected.analysis ? (
               <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4">
                 <div>
-                  <p className="text-xs text-zinc-400 leading-relaxed">{selected.analysis.summary}</p>
+                  <p className={`text-xs ${th.bodyText} leading-relaxed`}>{selected.analysis.summary}</p>
                   <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-sm font-mono">
                     {Object.entries(selected.analysis.details).map(([k, v]) => (
                       <div key={k} className="contents">
-                        <dt className="text-zinc-600">{k}</dt>
-                        <dd className="text-zinc-300 truncate" title={String(v)}>
+                        <dt className={th.bodyTextSoft}>{k}</dt>
+                        <dd className={`${th.strainMuted} truncate`} title={String(v)}>
                           {String(v)}
                         </dd>
                       </div>
@@ -359,7 +359,7 @@ export function ImportFilesPanel({ lightMode = false }: { lightMode?: boolean })
                   </div>
                 ) : null}
                 {selected.analysis.previewText ? (
-                  <pre className="text-sm leading-relaxed font-mono text-zinc-400 whitespace-pre-wrap break-words border border-white/[.06] rounded-lg p-3 bg-black/30 max-h-[min(36vh,320px)] overflow-y-auto">
+                  <pre className={th.importPre}>
                     {selected.analysis.previewText}
                   </pre>
                 ) : selected.analysis.category === "image" ? (

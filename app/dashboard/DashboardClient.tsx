@@ -18,7 +18,7 @@ import {
   StrainStatusStackBar,
 } from "./DashboardCharts";
 import { buildLimsVisualizationRScript, buildRCodeFromImportedTextFile } from "./limsRVisualizationExport";
-import { dashboardTokens, drawerTokens, strainStatusStyles } from "./dashboardTheme";
+import { accentBtn, dashboardTokens, drawerTokens, strainStatusStyles } from "./dashboardTheme";
 import { ImportFilesPanel } from "./ImportFilesPanel";
 import { ProjectsWorkspace } from "./ProjectsWorkspace";
 import { SendEmailPanel } from "./SendEmailPanel";
@@ -183,20 +183,20 @@ function StrainRecordDrawer({
     <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true" aria-labelledby="strain-doc-title">
       <button
         type="button"
-        className="absolute inset-0 bg-black/55 backdrop-blur-[2px] border-0 cursor-default"
+        className={`absolute inset-0 ${lightMode ? "bg-slate-900/25" : "bg-slate-950/45"} backdrop-blur-[2px] border-0 cursor-default`}
         aria-label="Close strain record"
         onClick={onClose}
       />
-      <div className="relative w-full max-w-lg h-full min-h-0 border-l border-white/[.08] bg-[#060a0e] shadow-[-12px_0_48px_rgba(0,0,0,0.5)] flex flex-col animate-[drawerIn_0.22s_ease-out]">
+      <div className={d.panel}>
         <style>{`@keyframes drawerIn { from { transform: translateX(12px); opacity: 0.92; } to { transform: translateX(0); opacity: 1; } }`}</style>
-        <div className="shrink-0 p-5 border-b border-white/[.06] flex items-start justify-between gap-3">
+        <div className={`shrink-0 p-5 ${d.headerBorder} flex items-start justify-between gap-3`}>
           <div className="min-w-0">
-            <p className="text-xs font-mono uppercase tracking-widest text-zinc-500 mb-1">Full LIMS record</p>
-            <h2 id="strain-doc-title" className="text-xl font-mono text-white truncate">
+            <p className={`text-xs font-medium tracking-wide ${d.kicker} mb-1`}>Full LIMS record</p>
+            <h2 id="strain-doc-title" className={`text-xl font-mono ${d.title} truncate`}>
               {strain.id}
             </h2>
             <span
-              className={`inline-flex mt-2 text-xs font-mono uppercase tracking-wider px-2 py-1 rounded border ${st.className}`}
+              className={`inline-flex mt-2 text-xs font-medium tracking-wide px-2 py-1 rounded border ${st.className}`}
             >
               {st.label}
             </span>
@@ -204,75 +204,75 @@ function StrainRecordDrawer({
           <button
             type="button"
             onClick={onClose}
-            className="shrink-0 rounded-lg border border-white/[.12] bg-white/[.04] px-3 py-1.5 text-xs font-mono text-zinc-300 hover:bg-white/[.08] hover:text-white transition-colors"
+            className={d.escBtn}
           >
             Esc
           </button>
         </div>
         <div className="flex-1 overflow-y-auto p-5 space-y-8">
           <section>
-            <h3 className="text-xs font-mono uppercase tracking-widest text-[#39d98a] mb-3">Biology summary</h3>
+            <h3 className={d.sectionTitle}>Biology summary</h3>
             <dl className="space-y-3 text-sm">
               <div>
-                <dt className="text-zinc-500 text-xs font-mono mb-0.5">Background</dt>
-                <dd className="text-zinc-200">{strain.genotype}</dd>
+                <dt className={d.dt}>Background</dt>
+                <dd className={d.dd}>{strain.genotype}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500 text-xs font-mono mb-0.5">Variant highlight</dt>
-                <dd className="text-[#39d98a] font-mono text-xs">{strain.mutations}</dd>
+                <dt className={d.dt}>Variant highlight</dt>
+                <dd className={d.ddAccent}>{strain.mutations}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500 text-xs font-mono mb-0.5">Phenotype</dt>
-                <dd className="text-zinc-200">{strain.phenotype}</dd>
+                <dt className={d.dt}>Phenotype</dt>
+                <dd className={d.dd}>{strain.phenotype}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500 text-xs font-mono mb-0.5">Last ingest</dt>
-                <dd className="text-zinc-300 font-mono text-xs">{strain.lastRun}</dd>
+                <dt className={d.dt}>Last ingest</dt>
+                <dd className={d.ddMuted}>{strain.lastRun}</dd>
               </div>
             </dl>
           </section>
           <section>
-            <h3 className="text-xs font-mono uppercase tracking-widest text-[#39d98a] mb-3">System identifiers</h3>
-            <dl className="space-y-3 text-sm font-mono text-xs break-all">
+            <h3 className={d.sectionTitle}>System identifiers</h3>
+            <dl className={`space-y-3 text-sm font-mono text-xs break-all ${d.dd}`}>
               <div>
-                <dt className="text-zinc-500 mb-0.5">record_uuid</dt>
-                <dd className="text-zinc-200">{meta.recordUuid}</dd>
+                <dt className={d.dt}>record_uuid</dt>
+                <dd>{meta.recordUuid}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500 mb-0.5">vcf_object</dt>
-                <dd className="text-sky-300/90">{meta.vcfObject}</dd>
+                <dt className={d.dt}>vcf_object</dt>
+                <dd className={d.vcf}>{meta.vcfObject}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500 mb-0.5">lineage_parent</dt>
-                <dd className="text-zinc-200">{meta.lineageParent}</dd>
+                <dt className={d.dt}>lineage_parent</dt>
+                <dd>{meta.lineageParent}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500 mb-0.5">schema</dt>
-                <dd className="text-zinc-200">{meta.schema}</dd>
+                <dt className={d.dt}>schema</dt>
+                <dd>{meta.schema}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500 mb-0.5">operator</dt>
-                <dd className="text-zinc-200">{meta.operator}</dd>
+                <dt className={d.dt}>operator</dt>
+                <dd>{meta.operator}</dd>
               </div>
             </dl>
           </section>
           <section>
-            <h3 className="text-xs font-mono uppercase tracking-widest text-[#39d98a] mb-3">Audit trail (simulated)</h3>
-            <ul className="space-y-2 text-xs text-zinc-400 border border-white/[.06] rounded-xl p-4 bg-white/[.02]">
+            <h3 className={d.sectionTitle}>Audit trail (simulated)</h3>
+            <ul className={d.auditList}>
               <li className="flex gap-2">
-                <span className="text-zinc-600 font-mono shrink-0">2026-04-01</span>
+                <span className={d.auditDate}>2026-04-01</span>
                 <span>Record created from template import.</span>
               </li>
               <li className="flex gap-2">
-                <span className="text-zinc-600 font-mono shrink-0">2026-04-06</span>
+                <span className={d.auditDate}>2026-04-06</span>
                 <span>VCF checksum verified; FTS index row upserted.</span>
               </li>
               <li className="flex gap-2">
-                <span className="text-zinc-600 font-mono shrink-0">{strain.lastRun.slice(0, 10)}</span>
+                <span className={d.auditDate}>{strain.lastRun.slice(0, 10)}</span>
                 <span>Latest ingest event; see pipeline bundle for raw artifacts.</span>
               </li>
             </ul>
-            <p className="mt-3 text-xs text-zinc-500 leading-relaxed">{meta.notes}</p>
+            <p className={`mt-3 text-xs ${d.notes} leading-relaxed`}>{meta.notes}</p>
           </section>
         </div>
       </div>
@@ -296,7 +296,7 @@ export function DashboardClient() {
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [demoHighContrast, setDemoHighContrast] = useState(false);
-  const [demoLightMode, setDemoLightMode] = useState(false);
+  const [demoLightMode, setDemoLightMode] = useState(true);
   const settingsWrapRef = useRef<HTMLDivElement>(null);
 
   const [notifyPreset, setNotifyPreset] = useState<NotifyPreset | null>(null);
@@ -325,7 +325,7 @@ export function DashboardClient() {
   useEffect(() => {
     try {
       setDemoHighContrast(localStorage.getItem("lims-demo-high-contrast") === "1");
-      setDemoLightMode(localStorage.getItem("lims-demo-light-mode") === "1");
+      setDemoLightMode(localStorage.getItem("lims-demo-light-mode") !== "0");
     } catch {
       /* ignore */
     }
@@ -425,9 +425,9 @@ export function DashboardClient() {
       {/* Sidebar */}
       <aside className={th.sidebar}>
         <div className={`p-4 ${th.sidebarHeaderBorder} flex items-center gap-2`}>
-          <span className="text-[#39d98a] text-lg font-mono font-bold">⬡</span>
+          <span className="h-4 w-4 shrink-0 rounded-md bg-[#0d7377]" aria-hidden />
           <div className="min-w-0 space-y-0.5">
-            <p className={`text-xs font-mono uppercase tracking-widest ${th.sidebarBrandSub} truncate`}>
+            <p className={`text-xs font-medium tracking-wide ${th.sidebarBrandSub} truncate`}>
               LIMS Console
             </p>
             <p className={`text-xs font-semibold ${th.sidebarTitle} leading-snug break-words`}>{LAB_TITLE_LINE}</p>
@@ -445,10 +445,10 @@ export function DashboardClient() {
         <nav className="flex-1 overflow-y-auto p-3 flex flex-col gap-1 text-sm">
           {(
             [
-              { id: "strains" as const, label: "Strain registry", icon: "▣" },
-              { id: "runs" as const, label: "Pipeline runs", icon: "◈" },
-              { id: "reports" as const, label: "Reports", icon: "◉" },
-              { id: "projects" as const, label: "Projects", icon: "◇" },
+              { id: "strains" as const, label: "Strain registry", icon: "Sr" },
+              { id: "runs" as const, label: "Pipeline runs", icon: "Rn" },
+              { id: "reports" as const, label: "Reports", icon: "Rp" },
+              { id: "projects" as const, label: "Projects", icon: "Pr" },
               { id: "r_export" as const, label: "R visuals", icon: "R" },
               { id: "import_files" as const, label: "Import files", icon: "↑" },
               { id: "send_email" as const, label: "Send email", icon: "✉" },
@@ -464,7 +464,7 @@ export function DashboardClient() {
               }`}
             >
               <span
-                className={`text-xs w-4 text-center ${demoLightMode ? "text-slate-400" : "text-zinc-600"}`}
+                className={`text-[10px] w-5 text-center font-medium tracking-tight ${demoLightMode ? "text-slate-400" : "text-slate-500"}`}
               >
                 {item.icon}
               </span>
@@ -478,9 +478,9 @@ export function DashboardClient() {
         {/* Top bar */}
         <header className={th.header}>
           <div className="flex items-center gap-3 min-w-0">
-            <span className="lg:hidden text-[#39d98a] font-mono font-bold">⬡</span>
+            <span className="lg:hidden h-4 w-4 shrink-0 rounded-md bg-[#0d7377]" aria-hidden />
             <div>
-              <p className={`text-xs font-mono uppercase tracking-widest ${th.headerKicker}`}>
+              <p className={`text-xs font-medium tracking-wide ${th.headerKicker}`}>
                 Reference · S288C
               </p>
               <h1 className={`text-sm font-semibold ${th.headerTitle} truncate`}>
@@ -499,9 +499,7 @@ export function DashboardClient() {
             <button
               type="button"
               onClick={() => setSettingsOpen((o) => !o)}
-              className={`${th.avatarPlate} cursor-pointer outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-[#39d98a]/40 focus-visible:ring-offset-2 ${
-                demoLightMode ? "focus-visible:ring-offset-[#eef2f6]" : "focus-visible:ring-offset-[#060a0e]"
-              } ${settingsOpen ? th.menuOpenRing : ""}`}
+              className={`${th.avatarPlate} cursor-pointer outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-[#0d7377]/40 focus-visible:ring-offset-2 ${th.ringOffset} ${settingsOpen ? th.menuOpenRing : ""}`}
               aria-controls="lims-demo-settings"
               title={`${LAB_LEAD_NAME} · ${LAB_LEAD_EMAIL} — demo settings`}
               aria-label={`${LAB_LEAD_NAME}, ${LAB_LEAD_EMAIL}. Open demo settings.`}
@@ -515,7 +513,7 @@ export function DashboardClient() {
                 role="region"
                 aria-label="Demo settings"
               >
-                <p className={`text-[10px] font-mono uppercase tracking-widest ${th.settingsMenuTitle} mb-2 px-0.5`}>
+                <p className={`text-[10px] font-medium tracking-wide ${th.settingsMenuTitle} mb-2 px-0.5`}>
                   Demo settings
                 </p>
                 <div className="space-y-2">
@@ -573,7 +571,7 @@ export function DashboardClient() {
               type="button"
               onClick={() => setActiveNav(id)}
               className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium ${
-                activeNav === id ? "bg-[#39d98a]/15 text-[#39d98a]" : th.mobileNavInactive
+                activeNav === id ? th.pillActive : th.mobileNavInactive
               }`}
             >
               {label}
@@ -593,7 +591,7 @@ export function DashboardClient() {
                   { label: "Open QC holds", value: "3", delta: "Awaiting review" },
                 ].map((k) => (
                   <div key={k.label} className={th.kpiCard}>
-                    <p className={`text-xs font-mono uppercase tracking-widest ${th.kpiLabel} mb-1`}>
+                    <p className={`text-xs font-medium tracking-wide ${th.kpiLabel} mb-1`}>
                       {k.label}
                     </p>
                     <p className={`text-2xl font-bold ${th.kpiValue} tabular-nums`}>{k.value}</p>
@@ -639,7 +637,7 @@ export function DashboardClient() {
                         slackChannel: "genomics-alerts",
                         slackText: `📋 Strain registry: ${filtered.length} strain${filtered.length === 1 ? "" : "s"} · ${filtered.filter((s) => s.status === "qc_hold").length} QC hold${filtered.filter((s) => s.status === "qc_hold").length === 1 ? "" : "s"} · ${filtered.filter((s) => s.status === "running").length} active`,
                       })}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-white/[.10] bg-white/[.03] px-3 py-1.5 text-xs font-medium text-zinc-400 hover:border-[#39d98a]/30 hover:text-[#39d98a] transition-colors"
+                      className={th.secondaryBtn}
                     >
                       <span className="text-[10px]">✉</span> Email PI summary
                     </button>
@@ -653,7 +651,7 @@ export function DashboardClient() {
                         slackChannel: "genomics-alerts",
                         slackText: `📋 Registry digest: ${filtered.length} strain${filtered.length === 1 ? "" : "s"} shown · ${filtered.filter((s) => s.status === "qc_hold").length} QC hold${filtered.filter((s) => s.status === "qc_hold").length === 1 ? "" : "s"} · ${filtered.filter((s) => s.status === "running").length} active pipeline`,
                       })}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-white/[.10] bg-white/[.03] px-3 py-1.5 text-xs font-medium text-zinc-400 hover:border-[#39d98a]/30 hover:text-[#39d98a] transition-colors"
+                      className={th.secondaryBtn}
                     >
                       <span className="text-[10px] font-mono">#</span> Post to Slack
                     </button>
@@ -687,32 +685,32 @@ export function DashboardClient() {
                                 setStrainDocId(row.id);
                               }
                             }}
-                            className="group border-b border-white/[.04] hover:bg-[#39d98a]/[.04] transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#39d98a]/35"
+                            className={th.tableRow}
                           >
-                            <td className="px-4 py-3 font-mono text-white">
+                            <td className={`px-4 py-3 font-mono ${th.strainId}`}>
                               <span className="inline-flex items-center gap-2">
                                 {row.id}
-                                <span className="text-xs font-mono text-zinc-600 group-hover:text-[#39d98a]/70 transition-colors max-[480px]:sr-only">
+                                <span className={`text-xs font-mono ${th.bodyTextSoft} ${th.hintArrow} transition-colors max-[480px]:sr-only`}>
                                   record →
                                 </span>
                               </span>
                             </td>
-                            <td className="px-4 py-3 text-zinc-400 hidden md:table-cell max-w-[200px] truncate">
+                            <td className={`px-4 py-3 ${th.strainMuted} hidden md:table-cell max-w-[200px] truncate`}>
                               {row.genotype}
                             </td>
                             <td className="px-4 py-3">
-                              <span className="text-[#39d98a] font-mono text-xs">{row.mutations}</span>
+                              <span className={`${th.accentText} font-mono text-xs`}>{row.mutations}</span>
                             </td>
-                            <td className="px-4 py-3 text-zinc-400 hidden lg:table-cell max-w-xs truncate">
+                            <td className={`px-4 py-3 ${th.strainMuted} hidden lg:table-cell max-w-xs truncate`}>
                               {row.phenotype}
                             </td>
-                            <td className="px-4 py-3 text-zinc-500 font-mono text-xs hidden sm:table-cell whitespace-nowrap">
+                            <td className={`px-4 py-3 ${th.strainMeta} hidden sm:table-cell whitespace-nowrap`}>
                               {row.lastRun}
                             </td>
                             <td className="px-4 py-3 text-right">
                               <span className="inline-flex items-center gap-2 justify-end flex-wrap">
                                 <span
-                                  className={`inline-flex text-xs font-mono uppercase tracking-wider px-2 py-1 rounded border ${st.className}`}
+                                  className={`inline-flex text-xs font-medium tracking-wide px-2 py-1 rounded border ${st.className}`}
                                 >
                                   {st.label}
                                 </span>
@@ -730,7 +728,11 @@ export function DashboardClient() {
                                         slackText: `⚠️ QC hold: ${row.id} — ${row.mutations}. ${row.phenotype}. Manual review required.`,
                                       });
                                     }}
-                                    className="inline-flex items-center gap-1 rounded border border-amber-500/30 bg-amber-500/8 px-2 py-0.5 text-[10px] font-mono text-amber-400 hover:bg-amber-500/15 transition-colors"
+                                    className={`inline-flex items-center gap-1 rounded border px-2 py-0.5 text-[10px] font-medium transition-colors ${
+                                      demoLightMode
+                                        ? "border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100"
+                                        : "border-amber-500/30 bg-amber-500/10 text-amber-200 hover:bg-amber-500/15"
+                                    }`}
                                   >
                                     Notify
                                   </button>
@@ -749,7 +751,7 @@ export function DashboardClient() {
                                         slackText: `✅ Strain ${row.id} indexed — ${row.mutations} · ${row.phenotype}`,
                                       });
                                     }}
-                                    className="inline-flex items-center gap-1 rounded border border-white/[.10] bg-white/[.02] px-2 py-0.5 text-[10px] font-mono text-zinc-500 hover:border-[#39d98a]/30 hover:text-[#39d98a] transition-colors"
+                                    className={`${th.secondaryBtn} gap-1 px-2 py-0.5 text-[10px] font-mono`}
                                   >
                                     Share
                                   </button>
@@ -796,7 +798,7 @@ export function DashboardClient() {
                       <span
                         className={`text-xs font-mono uppercase px-2 py-0.5 rounded border ${
                           r.state === "ok"
-                            ? "border-[#39d98a]/30 text-[#39d98a]"
+                            ? `border-[#0d7377]/30 ${th.accentText}`
                             : r.state === "active"
                               ? "border-sky-500/30 text-sky-300"
                               : "border-amber-500/30 text-amber-300"
@@ -816,7 +818,7 @@ export function DashboardClient() {
                             slackChannel: "genomics-alerts",
                             slackText: `✅ Run ${r.id} complete — ${r.files} FASTQ pairs · ${r.stage} done. Report in LIMS.`,
                           })}
-                          className="inline-flex items-center gap-1 rounded border border-[#39d98a]/25 bg-[#39d98a]/8 px-2 py-0.5 text-[10px] font-mono text-[#39d98a] hover:bg-[#39d98a]/15 transition-colors"
+                          className={`inline-flex items-center gap-1 rounded border border-[#0d7377]/25 bg-[#0d7377]/8 px-2 py-0.5 text-[10px] font-mono ${th.accentText} hover:bg-[#0d7377]/15 transition-colors`}
                         >
                           <span>✉</span> Email report
                         </button>
@@ -877,7 +879,7 @@ export function DashboardClient() {
                       slackChannel: "genomics-alerts",
                       slackText: "📄 New variant reports ready: RUN-20260411-02 (12 pairs, done) · RUN-20260410-07 (6 pairs, QC review). Full reports in LIMS.",
                     })}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-white/[.10] bg-white/[.03] px-3 py-1.5 text-xs font-medium text-zinc-400 hover:border-[#39d98a]/30 hover:text-[#39d98a] transition-colors"
+                    className={th.secondaryBtn}
                   >
                     <span className="text-[10px]">✉</span> Email reports
                   </button>
@@ -891,7 +893,7 @@ export function DashboardClient() {
                       slackChannel: "genomics-alerts",
                       slackText: "📄 Reports digest: 2 new reports available in LIMS. RUN-20260411-02 complete · RUN-20260410-07 needs QC review.",
                     })}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-white/[.10] bg-white/[.03] px-3 py-1.5 text-xs font-medium text-zinc-400 hover:border-[#39d98a]/30 hover:text-[#39d98a] transition-colors"
+                    className={th.secondaryBtn}
                   >
                     <span className="text-[10px] font-mono">#</span> Post to Slack
                   </button>
@@ -923,7 +925,7 @@ export function DashboardClient() {
                   Export a single R script that mirrors the dashboard demo charts with{" "}
                   <span className={demoLightMode ? "text-slate-800" : "text-zinc-300"}>ggplot2</span>. Running it
                   writes six PNGs into{" "}
-                  <code className="text-sm font-mono text-[#39d98a]/90">lims_r_export/</code>{" "}
+                  <code className={`text-sm font-mono ${th.accentSoft}`}>lims_r_export/</code>{" "}
                   next to the script, useful for slides, methods figures, or offline QC packs.
                 </p>
                 <p className={`text-xs ${th.footNote} mt-2 font-mono`}>
@@ -932,13 +934,13 @@ export function DashboardClient() {
                 <p className={`text-xs ${th.footNote} mt-2 leading-relaxed`}>
                   <strong className={demoLightMode ? "text-slate-700" : "text-zinc-400"}>Import file → R:</strong>{" "}
                   pick any file; its UTF-8 text is turned into R that calls{" "}
-                  <code className="text-sm font-mono text-[#39d98a]/90">writeLines()</code> to recreate it beside
+                  <code className={`text-sm font-mono ${th.accentSoft}`}>writeLines()</code> to recreate it beside
                   your working directory. Large files are truncated with a comment in the generated block.
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
-                <span className={`text-xs font-mono uppercase tracking-widest ${th.kpiLabel}`}>
+                <span className={`text-xs font-medium tracking-wide ${th.kpiLabel}`}>
                   Strain chart data
                 </span>
                 <div className={th.pillToggleWrap}>
@@ -947,7 +949,7 @@ export function DashboardClient() {
                     onClick={() => setRStrainScope("all")}
                     className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                       rStrainScope === "all"
-                        ? "bg-[#39d98a]/15 text-[#39d98a]"
+                        ? th.pillActive
                         : th.pillInactive
                     }`}
                   >
@@ -958,7 +960,7 @@ export function DashboardClient() {
                     onClick={() => setRStrainScope("filtered")}
                     className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                       rStrainScope === "filtered"
-                        ? "bg-[#39d98a]/15 text-[#39d98a]"
+                        ? th.pillActive
                         : th.pillInactive
                     }`}
                   >
@@ -974,7 +976,7 @@ export function DashboardClient() {
                 <button
                   type="button"
                   onClick={copyRScript}
-                  className="inline-flex items-center gap-2 rounded-lg border border-[#39d98a]/35 bg-[#39d98a]/10 px-4 py-2 text-xs font-semibold text-[#39d98a] hover:bg-[#39d98a]/15 transition-colors"
+                  className={accentBtn}
                 >
                   {rCopied ? "Copied" : "Copy R script"}
                 </button>
@@ -1000,7 +1002,7 @@ export function DashboardClient() {
                   onClick={() => setRPreviewOpen((o) => !o)}
                   className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-xs font-medium transition-colors ${
                     rPreviewOpen
-                      ? "border-[#39d98a]/40 bg-[#39d98a]/10 text-[#39d98a]"
+                      ? `border-[#0d7377]/40 bg-[#0d7377]/10 ${th.accentText}`
                       : th.secondaryBtn
                   }`}
                 >
@@ -1043,7 +1045,7 @@ export function DashboardClient() {
 
               {rPreviewOpen && (
                 <div className="space-y-3">
-                  <p className={`text-xs font-mono uppercase tracking-widest ${th.kpiLabel}`}>
+                  <p className={`text-xs font-medium tracking-wide ${th.kpiLabel}`}>
                     Chart preview (mirrors ggplot2 output)
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -1062,7 +1064,7 @@ export function DashboardClient() {
 
               <div className={th.codeBlock}>
                 <div className={`px-3 py-2 ${th.codeBlockHead} flex items-center justify-between gap-2`}>
-                  <span className={`text-xs font-mono uppercase tracking-widest ${th.kpiLabel}`}>
+                  <span className={`text-xs font-medium tracking-wide ${th.kpiLabel}`}>
                     {editedRScript !== null ? "Editor · edited" : "Editor"}
                   </span>
                   <span className={`text-xs font-mono ${th.footNote} truncate`}>

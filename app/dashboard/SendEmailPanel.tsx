@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { LAB_LEAD_EMAIL, LAB_LEAD_NAME } from "../labIdentity";
-import { dashboardTokens, drawerForm } from "./dashboardTheme";
+import { accentBtn, dashboardTokens, drawerForm } from "./dashboardTheme";
 
 type SentEmail = {
   id: string;
@@ -49,12 +49,12 @@ const EMAIL_TEMPLATES = [
 
 function StatusPill({ status }: { status: SentEmail["status"] }) {
   const map = {
-    sent: "border-[#39d98a]/30 text-[#39d98a] bg-[#39d98a]/10",
+    sent: "border-[#0d7377]/30 text-[#0d7377] bg-[#0d7377]/10",
     queued: "border-amber-500/30 text-amber-300 bg-amber-500/10",
     failed: "border-red-500/30 text-red-400 bg-red-500/10",
   } as const;
   return (
-    <span className={`inline-flex text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded border ${map[status]}`}>
+    <span className={`inline-flex text-[10px] font-medium tracking-wide px-1.5 py-0.5 rounded border ${map[status]}`}>
       {status}
     </span>
   );
@@ -115,9 +115,9 @@ export function SendEmailPanel({ lightMode }: { lightMode: boolean }) {
     <div className="max-w-3xl mx-auto space-y-6">
       {/* API info banner */}
       <div className={`rounded-xl border ${lightMode ? "border-slate-200 bg-slate-50" : "border-white/[.07] bg-white/[.02]"} p-4 flex items-start gap-3`}>
-        <span className="text-[#39d98a] text-lg leading-none shrink-0 mt-0.5">✉</span>
+        <span className="text-[#0d7377] text-lg leading-none shrink-0 mt-0.5">✉</span>
         <div className="min-w-0">
-          <p className={`text-xs font-mono uppercase tracking-widest ${th.accentLabel} mb-1`}>Email API integration</p>
+          <p className={`text-xs font-medium tracking-wide ${th.accentLabel} mb-1`}>Email API integration</p>
           <p className={`text-sm ${th.bodyText} leading-relaxed`}>
             Sends transactional emails via the lab&apos;s Email API (Resend / SendGrid / SMTP). Used for automated run notifications, QC alerts, and periodic digests. In production, triggered by pipeline events.
           </p>
@@ -190,11 +190,11 @@ export function SendEmailPanel({ lightMode }: { lightMode: boolean }) {
               type="button"
               onClick={handleSend}
               disabled={sending}
-              className="inline-flex items-center gap-2 rounded-lg border border-[#39d98a]/35 bg-[#39d98a]/10 px-5 py-2 text-xs font-semibold text-[#39d98a] hover:bg-[#39d98a]/18 transition-colors disabled:opacity-50"
+              className={`${accentBtn} px-5 disabled:opacity-50`}
             >
               {sending ? (
                 <>
-                  <span className="inline-block w-3 h-3 rounded-full border-2 border-[#39d98a]/40 border-t-[#39d98a] animate-spin" />
+                  <span className="inline-block w-3 h-3 rounded-full border-2 border-[#0d7377]/40 border-t-[#0d7377] animate-spin" />
                   Sending…
                 </>
               ) : (
@@ -235,7 +235,7 @@ export function SendEmailPanel({ lightMode }: { lightMode: boolean }) {
 
       {/* Toast */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[80] rounded-xl border border-[#39d98a]/35 bg-[#0a1a10] px-5 py-3 text-sm font-mono text-[#39d98a] shadow-2xl shadow-black/50 pointer-events-none">
+        <div className={`${th.toast} font-mono`}>
           {toast}
         </div>
       )}

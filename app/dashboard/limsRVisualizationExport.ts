@@ -81,18 +81,18 @@ suppressPackageStartupMessages({
 theme_lims <- function() {
   theme_minimal(base_size = 11) +
     theme(
-      plot.background = element_rect(fill = "#0a1016", color = NA),
-      panel.background = element_rect(fill = "#0a1016", color = NA),
-      text = element_text(color = "#e4e4e7"),
-      axis.text = element_text(color = "#a1a1aa"),
-      panel.grid.major = element_line(color = "white", size = 0.15, alpha = 0.08),
+      plot.background = element_rect(fill = "#f1f4f8", color = NA),
+      panel.background = element_rect(fill = "white", color = NA),
+      text = element_text(color = "#1e293b"),
+      axis.text = element_text(color = "#475569"),
+      panel.grid.major = element_line(color = "#e2e8f0", linewidth = 0.3),
       panel.grid.minor = element_blank(),
-      plot.title = element_text(face = "bold", color = "#fafafa"),
-      plot.subtitle = element_text(color = "#71717a", size = 9)
+      plot.title = element_text(face = "bold", color = "#0d7377"),
+      plot.subtitle = element_text(color = "#64748b", size = 9)
     )
 }
 
-accent <- "#39d98a"
+accent <- "#0d7377"
 sky <- "#38bdf8"
 amber <- "#fbbf24"
 
@@ -113,7 +113,7 @@ p_status <- ggplot(status_df, aes(x = status, y = n, fill = fill)) +
   labs(title = "LIMS status mix", subtitle = "Strain registry counts", x = NULL, y = "Strains") +
   theme_lims()
 
-ggsave(file.path(out_dir, "01_strain_status_mix.png"), p_status, width = 7, height = 4, dpi = 150, bg = "#0a1016")
+ggsave(file.path(out_dir, "01_strain_status_mix.png"), p_status, width = 7, height = 4, dpi = 150, bg = "#f1f4f8")
 
 # --- 2) Mean Q30 trend (demo series) ---
 q30_frac <- c(${q30})
@@ -128,7 +128,7 @@ p_q30 <- ggplot(q30_df, aes(x = run_index, y = q30_pct)) +
   labs(title = "Mean Q30 (10 runs)", subtitle = "Synthetic demo tail; same shape as console sparkline", x = "Run order (older → newer)", y = "Q30 %") +
   theme_lims()
 
-ggsave(file.path(out_dir, "02_mean_q30_sparkline.png"), p_q30, width = 7.5, height = 4, dpi = 150, bg = "#0a1016")
+ggsave(file.path(out_dir, "02_mean_q30_sparkline.png"), p_q30, width = 7.5, height = 4, dpi = 150, bg = "#f1f4f8")
 
 # --- 3) FASTQ pairs per pipeline run ---
 runs_df <- data.frame(
@@ -146,7 +146,7 @@ p_runs <- ggplot(runs_df, aes(x = id, y = files, fill = state_col)) +
   theme_lims() +
   theme(axis.text.x = element_text(angle = 35, hjust = 1, size = 8))
 
-ggsave(file.path(out_dir, "03_fastq_pairs_per_run.png"), p_runs, width = 8, height = 4.2, dpi = 150, bg = "#0a1016")
+ggsave(file.path(out_dir, "03_fastq_pairs_per_run.png"), p_runs, width = 8, height = 4.2, dpi = 150, bg = "#f1f4f8")
 
 # --- 4) Cluster time by stage (stacked share) ---
 stage_df <- data.frame(
@@ -163,7 +163,7 @@ p_stage <- ggplot(stage_df, aes(x = "", y = pct, fill = stage)) +
   theme_lims() +
   theme(axis.text.y = element_blank(), legend.position = "bottom")
 
-ggsave(file.path(out_dir, "04_cluster_time_by_stage.png"), p_stage, width = 8, height = 3.5, dpi = 150, bg = "#0a1016")
+ggsave(file.path(out_dir, "04_cluster_time_by_stage.png"), p_stage, width = 8, height = 3.5, dpi = 150, bg = "#f1f4f8")
 
 # --- 5) PDFs generated / week ---
 week_df <- data.frame(
@@ -176,7 +176,7 @@ p_weeks <- ggplot(week_df, aes(x = week, y = n)) +
   labs(title = "PDFs generated / week", subtitle = "Automated run reports", x = NULL, y = "Count") +
   theme_lims()
 
-ggsave(file.path(out_dir, "05_pdfs_per_week.png"), p_weeks, width = 7.5, height = 4, dpi = 150, bg = "#0a1016")
+ggsave(file.path(out_dir, "05_pdfs_per_week.png"), p_weeks, width = 7.5, height = 4, dpi = 150, bg = "#f1f4f8")
 
 # --- 6) Typical page budget (stacked) ---
 page_df <- data.frame(
@@ -193,7 +193,7 @@ p_pages <- ggplot(page_df, aes(x = "", y = pct, fill = section)) +
   theme_lims() +
   theme(axis.text.y = element_blank(), legend.position = "bottom")
 
-ggsave(file.path(out_dir, "06_report_page_budget.png"), p_pages, width = 8, height = 3.5, dpi = 150, bg = "#0a1016")
+ggsave(file.path(out_dir, "06_report_page_budget.png"), p_pages, width = 8, height = 3.5, dpi = 150, bg = "#f1f4f8")
 
 message("Saved 6 PNGs to ", normalizePath(out_dir, winslash = "/", mustWork = FALSE))
 `;

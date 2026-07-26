@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import { dashboardTokens, drawerForm } from "./dashboardTheme";
+import { accentBtn, dashboardTokens, drawerForm } from "./dashboardTheme";
 
 type SlackMessage = {
   id: string;
@@ -89,12 +89,12 @@ const SLACK_TEMPLATES = [
 
 function SlackStatusPill({ status }: { status: SlackMessage["status"] }) {
   const map = {
-    sent: "border-[#39d98a]/30 text-[#39d98a] bg-[#39d98a]/10",
+    sent: "border-[#0d7377]/30 text-[#0d7377] bg-[#0d7377]/10",
     scheduled: "border-sky-500/30 text-sky-300 bg-sky-500/10",
     failed: "border-red-500/30 text-red-400 bg-red-500/10",
   } as const;
   return (
-    <span className={`inline-flex text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded border ${map[status]}`}>
+    <span className={`inline-flex text-[10px] font-medium tracking-wide px-1.5 py-0.5 rounded border ${map[status]}`}>
       {status}
     </span>
   );
@@ -215,7 +215,7 @@ export function SlackPanel({ lightMode }: { lightMode: boolean }) {
       key={id}
       type="button"
       onClick={() => setActiveTab(id)}
-      className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${activeTab === id ? "bg-[#39d98a]/15 text-[#39d98a]" : th.pillInactive}`}
+      className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${activeTab === id ? th.pillActive : th.pillInactive}`}
     >
       {label}
     </button>
@@ -227,7 +227,7 @@ export function SlackPanel({ lightMode }: { lightMode: boolean }) {
       <div className={`rounded-xl border ${lightMode ? "border-slate-200 bg-slate-50" : "border-white/[.07] bg-white/[.02]"} p-4 flex items-start gap-3`}>
         <span className="text-[#4A154B] text-lg leading-none shrink-0 mt-0.5 bg-white rounded px-1">slack</span>
         <div className="min-w-0">
-          <p className={`text-xs font-mono uppercase tracking-widest ${th.accentLabel} mb-1`}>Slack API integration</p>
+          <p className={`text-xs font-medium tracking-wide ${th.accentLabel} mb-1`}>Slack API integration</p>
           <p className={`text-sm ${th.bodyText} leading-relaxed`}>
             Posts notifications to lab Slack channels via the Slack Web API (Bot Token). Used for automated pipeline events, QC alerts, and time-managed digest scheduling. Full message history logged in LIMS.
           </p>
@@ -300,11 +300,11 @@ export function SlackPanel({ lightMode }: { lightMode: boolean }) {
                   type="button"
                   onClick={handleSendNotification}
                   disabled={sending}
-                  className="inline-flex items-center gap-2 rounded-lg border border-[#39d98a]/35 bg-[#39d98a]/10 px-5 py-2 text-xs font-semibold text-[#39d98a] hover:bg-[#39d98a]/18 transition-colors disabled:opacity-50"
+                  className={`${accentBtn} px-5 disabled:opacity-50`}
                 >
                   {sending ? (
                     <>
-                      <span className="inline-block w-3 h-3 rounded-full border-2 border-[#39d98a]/40 border-t-[#39d98a] animate-spin" />
+                      <span className="inline-block w-3 h-3 rounded-full border-2 border-[#0d7377]/40 border-t-[#0d7377] animate-spin" />
                       Sending…
                     </>
                   ) : (
@@ -421,7 +421,7 @@ export function SlackPanel({ lightMode }: { lightMode: boolean }) {
             {/* Scheduled messages */}
             {messageLog.filter((m) => m.status === "scheduled").length > 0 && (
               <div>
-                <p className={`text-xs font-mono uppercase tracking-widest ${th.accentLabel} mt-4 mb-2`}>Upcoming scheduled</p>
+                <p className={`text-xs font-medium tracking-wide ${th.accentLabel} mt-4 mb-2`}>Upcoming scheduled</p>
                 <ul className={`space-y-2 border ${lightMode ? "border-slate-200 bg-slate-50/80" : "border-white/[.06] bg-white/[.02]"} rounded-xl p-3`}>
                   {messageLog.filter((m) => m.status === "scheduled").map((m) => (
                     <li key={m.id} className={`text-xs ${th.bodyText} border-b ${lightMode ? "border-slate-100 last:border-0" : "border-white/[.04] last:border-0"} pb-2 last:pb-0`}>
@@ -500,7 +500,7 @@ export function SlackPanel({ lightMode }: { lightMode: boolean }) {
               <button
                 type="button"
                 onClick={addReminder}
-                className="inline-flex items-center gap-2 rounded-lg border border-[#39d98a]/35 bg-[#39d98a]/10 px-5 py-2 text-xs font-semibold text-[#39d98a] hover:bg-[#39d98a]/18 transition-colors"
+                className={`${accentBtn} px-5`}
               >
                 Add reminder
               </button>
@@ -526,14 +526,14 @@ export function SlackPanel({ lightMode }: { lightMode: boolean }) {
                     onClick={() => toggleReminder(rem.id)}
                     className={`mt-0.5 h-4 w-4 shrink-0 rounded border flex items-center justify-center transition-colors ${
                       rem.done
-                        ? "border-[#39d98a]/50 bg-[#39d98a]/20"
+                        ? "border-[#0d7377]/50 bg-[#0d7377]/20"
                         : lightMode
                           ? "border-slate-300 bg-white"
                           : "border-white/20 bg-transparent"
                     }`}
                     aria-label={rem.done ? "Mark incomplete" : "Mark complete"}
                   >
-                    {rem.done && <span className="text-[#39d98a] text-[10px] leading-none">✓</span>}
+                    {rem.done && <span className="text-[#0d7377] text-[10px] leading-none">✓</span>}
                   </button>
                   <div className="min-w-0 flex-1">
                     <p className={`text-sm ${rem.done ? `${th.footNote} line-through` : lightMode ? "text-slate-900" : "text-white"} leading-snug`}>
@@ -552,7 +552,7 @@ export function SlackPanel({ lightMode }: { lightMode: boolean }) {
 
       {/* Toast */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[80] rounded-xl border border-[#39d98a]/35 bg-[#0a1a10] px-5 py-3 text-sm font-mono text-[#39d98a] shadow-2xl shadow-black/50 pointer-events-none">
+        <div className={`${th.toast} font-mono`}>
           {toast}
         </div>
       )}

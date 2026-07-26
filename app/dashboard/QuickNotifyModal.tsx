@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { dashboardTokens, drawerForm } from "./dashboardTheme";
+import { accentBtn, dashboardTokens, drawerForm } from "./dashboardTheme";
 
 export type NotifyPreset = {
   title: string;
@@ -70,7 +70,7 @@ export function QuickNotifyModal({
       key={id}
       type="button"
       onClick={() => setTab(id)}
-      className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${tab === id ? "bg-[#39d98a]/15 text-[#39d98a]" : th.pillInactive}`}
+      className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${tab === id ? th.pillActive : th.pillInactive}`}
     >
       {label}
     </button>
@@ -86,7 +86,7 @@ export function QuickNotifyModal({
       {/* Backdrop */}
       <button
         type="button"
-        className="absolute inset-0 bg-black/60 backdrop-blur-[3px] border-0 cursor-default w-full h-full"
+        className={`absolute inset-0 ${lightMode ? "bg-slate-900/25" : "bg-slate-950/45"} backdrop-blur-[3px] border-0 cursor-default w-full h-full`}
         aria-label="Close notification"
         onClick={onClose}
       />
@@ -97,7 +97,7 @@ export function QuickNotifyModal({
         className={`relative w-full max-w-md rounded-2xl border shadow-2xl shadow-black/50 flex flex-col overflow-hidden animate-[drawerIn_0.18s_ease-out] font-sans ${
           lightMode
             ? "border-slate-200 bg-white"
-            : "border-white/[.10] bg-[#070c10]"
+            : "border-white/[.10] bg-[#222c3a]"
         }`}
       >
         <style>{`@keyframes drawerIn { from { transform: translateY(8px); opacity: 0.9; } to { transform: translateY(0); opacity: 1; } }`}</style>
@@ -105,7 +105,7 @@ export function QuickNotifyModal({
         {/* Header */}
         <div className={`flex items-start justify-between gap-3 p-4 border-b ${lightMode ? "border-slate-200" : "border-white/[.07]"}`}>
           <div>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#39d98a] mb-0.5">Quick notify</p>
+            <p className={`text-xs font-medium tracking-wide ${th.accentText} mb-0.5`}>Quick notify</p>
             <h2 id="qn-title" className={`text-sm font-semibold ${lightMode ? "text-slate-900" : "text-white"}`}>
               {preset.title}
             </h2>
@@ -200,7 +200,7 @@ export function QuickNotifyModal({
         </div>
 
         {/* Footer */}
-        <div className={`flex items-center justify-between gap-3 px-4 py-3 border-t ${lightMode ? "border-slate-200 bg-slate-50" : "border-white/[.07] bg-[#050810]"}`}>
+        <div className={`flex items-center justify-between gap-3 px-4 py-3 border-t ${lightMode ? "border-slate-200 bg-slate-50" : "border-white/[.07] bg-[#1a2332]"}`}>
           <span className={`text-[10px] font-mono ${th.footNote}`}>Simulated · no real message sent</span>
           <div className="flex items-center gap-2">
             <button type="button" onClick={onClose} className={th.secondaryBtn}>
@@ -210,13 +210,13 @@ export function QuickNotifyModal({
               type="button"
               onClick={handleSend}
               disabled={sending || sent}
-              className="inline-flex items-center gap-2 rounded-lg border border-[#39d98a]/35 bg-[#39d98a]/10 px-4 py-2 text-xs font-semibold text-[#39d98a] hover:bg-[#39d98a]/18 transition-colors disabled:opacity-60"
+              className={`${accentBtn} disabled:opacity-60`}
             >
               {sent ? (
                 "✓ Sent"
               ) : sending ? (
                 <>
-                  <span className="inline-block w-3 h-3 rounded-full border-2 border-[#39d98a]/40 border-t-[#39d98a] animate-spin" />
+                  <span className="inline-block w-3 h-3 rounded-full border-2 border-[#0d7377]/40 border-t-[#0d7377] animate-spin" />
                   Sending…
                 </>
               ) : (

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { LAB_LEAD_EMAIL, LAB_LEAD_NAME } from "../labIdentity";
-import { dashboardTokens, drawerForm, drawerTokens } from "./dashboardTheme";
+import { accentBtn, dashboardTokens, drawerForm, drawerTokens } from "./dashboardTheme";
 
 const STORAGE_KEY = "genomics-pitch:projects:v1";
 
@@ -198,7 +198,7 @@ function ProjectDrawer({
     <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true" aria-labelledby="project-drawer-title">
       <button
         type="button"
-        className="absolute inset-0 bg-black/55 backdrop-blur-[2px] border-0 cursor-default"
+        className={`absolute inset-0 ${lightMode ? "bg-slate-900/25" : "bg-slate-950/45"} backdrop-blur-[2px] border-0 cursor-default`}
         aria-label="Close project"
         onClick={onClose}
       />
@@ -206,19 +206,19 @@ function ProjectDrawer({
         <style>{`@keyframes drawerIn { from { transform: translateX(12px); opacity: 0.92; } to { transform: translateX(0); opacity: 1; } }`}</style>
         <div className={`shrink-0 p-5 ${dr.headerBorder} flex items-start justify-between gap-3`}>
           <div className="min-w-0">
-            <p className={`text-xs font-mono uppercase tracking-widest ${dr.kicker} mb-1`}>Project record</p>
+            <p className={`text-xs font-medium tracking-wide ${dr.kicker} mb-1`}>Project record</p>
             <h2 id="project-drawer-title" className={`text-xl font-mono ${dr.title} truncate`}>
               {project.code}
             </h2>
             <span
-              className={`inline-flex mt-2 text-xs font-mono uppercase tracking-wider px-2 py-1 rounded border ${
+              className={`inline-flex mt-2 text-xs font-medium tracking-wide px-2 py-1 rounded border ${
                 archived
                   ? lightMode
                     ? "bg-slate-200 text-slate-700 border-slate-300"
                     : "bg-zinc-500/15 text-zinc-400 border-zinc-500/25"
                   : lightMode
-                    ? "bg-emerald-100 text-emerald-900 border-emerald-200"
-                    : "bg-[#39d98a]/15 text-[#39d98a] border-[#39d98a]/25"
+                    ? "bg-[#0d7377]/10 text-[#0d7377] border-[#0d7377]/20"
+                    : "bg-[#0d7377]/15 text-[#5eead4] border-[#0d7377]/25"
               }`}
             >
               {archived ? "Archived" : "Active"}
@@ -286,7 +286,7 @@ function ProjectDrawer({
               <button
                 type="button"
                 onClick={addCollaborator}
-                className="rounded-lg border border-[#39d98a]/35 bg-[#39d98a]/10 px-3 py-2 text-xs font-semibold text-[#39d98a] hover:bg-[#39d98a]/15 whitespace-nowrap"
+                className={`${accentBtn} px-3 whitespace-nowrap`}
               >
                 Invite
               </button>
@@ -350,7 +350,7 @@ function ProjectDrawer({
               persist();
               onClose();
             }}
-            className="rounded-lg border border-[#39d98a]/35 bg-[#39d98a]/10 px-4 py-2 text-xs font-semibold text-[#39d98a] hover:bg-[#39d98a]/15"
+            className={accentBtn}
           >
             Save to project log
           </button>
@@ -465,7 +465,7 @@ export function ProjectsWorkspace({ lightMode = false }: { lightMode?: boolean }
                     type="button"
                     onClick={() => setFilter(f)}
                     className={`px-3 py-1.5 rounded-md text-xs font-medium capitalize transition-colors ${
-                      filter === f ? "bg-[#39d98a]/15 text-[#39d98a]" : th.pillInactive
+                      filter === f ? th.pillActive : th.pillInactive
                     }`}
                   >
                     {f}
@@ -498,7 +498,7 @@ export function ProjectsWorkspace({ lightMode = false }: { lightMode?: boolean }
               <tbody>
                 {filtered.map((p) => (
                   <tr key={p.id} className={th.tableRowPlain}>
-                    <td className="px-4 py-3 font-mono text-[#39d98a]">{p.code}</td>
+                    <td className={`px-4 py-3 font-mono ${th.accentText}`}>{p.code}</td>
                     <td className="px-4 py-3">
                       <span className={`${th.strainId} font-medium`}>{p.name}</span>
                       {p.archived && (
@@ -518,7 +518,7 @@ export function ProjectsWorkspace({ lightMode = false }: { lightMode?: boolean }
                       <button
                         type="button"
                         onClick={() => setOpenId(p.id)}
-                        className="text-xs font-mono text-[#39d98a] hover:underline"
+                        className={`text-xs font-mono ${th.accentText} hover:underline`}
                       >
                         Open
                       </button>
@@ -557,7 +557,7 @@ export function ProjectsWorkspace({ lightMode = false }: { lightMode?: boolean }
           <button
             type="button"
             onClick={createProject}
-            className="mt-1 rounded-lg border border-[#39d98a]/35 bg-[#39d98a]/10 px-4 py-2.5 text-xs font-semibold text-[#39d98a] hover:bg-[#39d98a]/15 transition-colors"
+            className={`${accentBtn} mt-1 py-2.5`}
           >
             Create &amp; assign code
           </button>
