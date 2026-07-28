@@ -1,25 +1,10 @@
 /** Shared light / dark surface classes for LIMS dashboard (client-only).
- *  Calm lab / instrumentation palette — soft neutrals, muted teal, low visual fatigue.
+ *  Calm lab / instrumentation palette - soft neutrals, muted teal, low visual fatigue.
  */
-
-export const LAB = {
-  accent: "#0d7377",
-  accentHover: "#0a5c61",
-  accentMuted: "#14919b",
-  shellLight: "#f1f4f8",
-  shellDark: "#1a2332",
-  chromeLight: "#ffffff",
-  chromeDark: "#222c3a",
-  panelDark: "#243041",
-  wellDark: "#151c28",
-} as const;
 
 /** Primary CTA / accent chip (works on both surfaces). */
 export const accentBtn =
   "inline-flex items-center gap-2 rounded-lg border border-[#0d7377]/30 bg-[#0d7377]/10 px-4 py-2 text-xs font-semibold text-[#0d7377] hover:bg-[#0d7377]/16 transition-colors";
-
-export const accentBtnSm =
-  "inline-flex items-center gap-1.5 rounded-lg border border-[#0d7377]/30 bg-[#0d7377]/10 px-3 py-1.5 text-xs font-medium text-[#0d7377] hover:bg-[#0d7377]/16 transition-colors";
 
 export function dashboardTokens(light: boolean) {
   const L = light;
@@ -31,11 +16,10 @@ export function dashboardTokens(light: boolean) {
     sidebar: L
       ? "hidden lg:flex w-56 shrink-0 flex-col border-r border-slate-200/80 bg-white sticky top-0 h-screen"
       : "hidden lg:flex w-56 shrink-0 flex-col border-r border-white/[.08] bg-[#222c3a] sticky top-0 h-screen",
+    sidebarNavScroll: L ? "sidebar-scroll-light" : "sidebar-scroll-dark",
     sidebarHeaderBorder: L ? "border-b border-slate-200/80" : "border-b border-white/[.08]",
     sidebarBrandSub: L ? "text-slate-500" : "text-slate-400",
     sidebarTitle: L ? "text-slate-900" : "text-slate-50",
-    sidebarFooterBorder: L ? "border-t border-slate-200/80" : "border-t border-white/[.08]",
-    linkMuted: L ? "text-slate-500 hover:text-[#0a5c61]" : "text-slate-400 hover:text-[#5eead4]",
 
     navInactive: L
       ? "text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-transparent"
@@ -55,14 +39,6 @@ export function dashboardTokens(light: boolean) {
       : "lg:hidden flex border-b border-white/[.08] bg-[#222c3a] p-2 gap-1 overflow-x-auto",
     mobileNavInactive: L ? "text-slate-500" : "text-slate-400",
 
-    demoBadge: L
-      ? "hidden sm:inline text-[10px] leading-tight font-medium tracking-wide px-1.5 py-0.5 rounded-md border border-amber-300/70 text-amber-900/90 bg-amber-50"
-      : "hidden sm:inline text-[10px] leading-tight font-medium tracking-wide px-1.5 py-0.5 rounded-md border border-amber-500/30 text-amber-200/90 bg-amber-500/10",
-
-    mobileDemoBanner: L
-      ? "sm:hidden border-t border-amber-300/60 bg-amber-50 px-2 py-0.5 text-center text-[10px] leading-tight font-medium tracking-wide text-amber-900"
-      : "sm:hidden border-t border-amber-500/25 bg-amber-500/10 px-2 py-0.5 text-center text-[10px] leading-tight font-medium tracking-wide text-amber-200/85",
-
     /** Ring when avatar settings menu is open */
     menuOpenRing: L
       ? "ring-2 ring-[#0d7377]/35 ring-offset-2 ring-offset-[#f1f4f8]"
@@ -79,19 +55,6 @@ export function dashboardTokens(light: boolean) {
     settingsRow: L
       ? "flex cursor-pointer items-center justify-between gap-3 text-xs text-slate-700 py-1.5 px-0.5 rounded-lg hover:bg-slate-100"
       : "flex cursor-pointer items-center justify-between gap-3 text-xs text-slate-300 py-1.5 px-0.5 rounded-lg hover:bg-white/[.05]",
-    /** Demo settings menu · iOS-style switch (track + inner thumb span) */
-    settingsSwitchTrack: L
-      ? "relative flex h-6 w-11 shrink-0 items-center rounded-full border px-[3px] transition-[background-color,border-color] duration-200 ease-out has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#0d7377]/35 has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-white"
-      : "relative flex h-6 w-11 shrink-0 items-center rounded-full border px-[3px] transition-[background-color,border-color] duration-200 ease-out has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#0d7377]/40 has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-[#243041]",
-    settingsSwitchTrackOff: L
-      ? "border-slate-200 bg-slate-100"
-      : "border-white/[.12] bg-white/[.08]",
-    settingsSwitchTrackOn: L
-      ? "border-[#0d7377]/50 bg-[#0d7377]"
-      : "border-[#0d7377]/45 bg-[#0d7377]/70",
-    settingsSwitchThumb:
-      "pointer-events-none h-[18px] w-[18px] shrink-0 rounded-full bg-white shadow-sm ring-1 ring-black/10 transition-[margin] duration-200 ease-out",
-    settingsSwitchThumbOn: "ml-auto",
     settingsCheckbox: L
       ? "rounded border-slate-300 bg-white text-[#0d7377] focus:ring-[#0d7377]/35"
       : "rounded border-white/25 bg-[#1a2332] text-[#0d7377] focus:ring-[#0d7377]/40",

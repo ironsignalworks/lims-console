@@ -26,37 +26,35 @@ body {
   font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
 
-/* Landing hero KPI tiles: staggered rise. Cards are always visible (opacity:1 by default);
-   the animation only adds a subtle translate/scale entrance — no opacity gate. */
-@keyframes hero-kpi-rise {
-  from {
-    transform: translateY(16px) scale(0.985);
-  }
-  to {
-    transform: translateY(0) scale(1);
-  }
+/* Sidebar nav · scrollbar matches panel background (6px, no contrast) */
+.sidebar-scroll-light {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff #ffffff;
+}
+.sidebar-scroll-light::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.sidebar-scroll-light::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+.sidebar-scroll-light::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border-radius: 3px;
 }
 
-.hero-kpi-grid.hero-kpi-grid--in-view .hero-kpi-card {
-  animation: hero-kpi-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+.sidebar-scroll-dark {
+  scrollbar-width: thin;
+  scrollbar-color: #222c3a #222c3a;
 }
-
-.hero-kpi-grid.hero-kpi-grid--in-view .hero-kpi-card:nth-child(1) {
-  animation-delay: 0.06s;
+.sidebar-scroll-dark::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-.hero-kpi-grid.hero-kpi-grid--in-view .hero-kpi-card:nth-child(2) {
-  animation-delay: 0.16s;
+.sidebar-scroll-dark::-webkit-scrollbar-track {
+  background: #222c3a;
 }
-.hero-kpi-grid.hero-kpi-grid--in-view .hero-kpi-card:nth-child(3) {
-  animation-delay: 0.26s;
-}
-.hero-kpi-grid.hero-kpi-grid--in-view .hero-kpi-card:nth-child(4) {
-  animation-delay: 0.36s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-kpi-grid .hero-kpi-card {
-    animation: none !important;
-    transform: none !important;
-  }
+.sidebar-scroll-dark::-webkit-scrollbar-thumb {
+  background: #222c3a;
+  border-radius: 3px;
 }

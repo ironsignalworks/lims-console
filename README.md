@@ -1,8 +1,12 @@
 # LIMS Console (Demo)
 
-Standalone Next.js app for the YeastGenomics LIMS console demo — strain registry, pipeline runs, reports, projects, R export, file import, email, and Slack integrations (simulated).
+Standalone Next.js app for the YeastGenomics LIMS console demo - strain registry, pipeline runs, reports, projects, R export, file import, email, and Slack integrations (simulated).
 
 No pitch UI and no “Back to proposal” link. Served at **`/`** and **`/dashboard`** (same app; `/dashboard` exists so the pitch site can proxy that path unchanged).
+
+Includes the interactive **Pipeline scenarios** explorer (Mermaid flowcharts, LIMS DB view, run simulation) under **Pipeline scenarios** in the sidebar, or directly at `/pipeline-schema.html`.
+
+**FAQ:** in-app under **FAQ** in the sidebar (content in `app/dashboard/faqContent.ts`). See also [FAQ.md](./FAQ.md).
 
 ## Run locally
 
@@ -23,7 +27,7 @@ Deploy this repo as its own Vercel project. Point the pitch project’s `LIMS_CO
 
 ## Scripts
 
-- `npm run dev` — development server (port 3001)
-- `npm run build` — production build
-- `npm run start` — serve production build
-- `npm run lint` — ESLint
+- `npm run dev` - development server (port 3001)
+- `npm run build` - production build
+- `npm run start` - serve production build
+- `npm run lint` - ESLint

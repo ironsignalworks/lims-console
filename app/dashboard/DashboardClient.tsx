@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
+import Link from "next/link";
 import {
   LAB_AFFILIATION_LINE,
   LAB_LEAD_EMAIL,
@@ -20,7 +21,9 @@ import {
 import { buildLimsVisualizationRScript, buildRCodeFromImportedTextFile } from "./limsRVisualizationExport";
 import { accentBtn, dashboardTokens, drawerTokens, strainStatusStyles } from "./dashboardTheme";
 import { ImportFilesPanel } from "./ImportFilesPanel";
+import { PipelineSchemaPanel } from "./PipelineSchemaPanel";
 import { ProjectsWorkspace } from "./ProjectsWorkspace";
+import { FaqPanel } from "./FaqPanel";
 import { SendEmailPanel } from "./SendEmailPanel";
 import { SlackPanel } from "./SlackPanel";
 import { QuickNotifyModal, type NotifyPreset } from "./QuickNotifyModal";
@@ -284,7 +287,16 @@ function StrainRecordDrawer({
 export function DashboardClient() {
   const [query, setQuery] = useState("");
   const [activeNav, setActiveNav] = useState<
-    "strains" | "runs" | "reports" | "projects" | "r_export" | "import_files" | "send_email" | "slack"
+    | "strains"
+    | "runs"
+    | "pipeline"
+    | "reports"
+    | "projects"
+    | "r_export"
+    | "import_files"
+    | "send_email"
+    | "slack"
+    | "faq"
   >("strains");
   const [strainDocId, setStrainDocId] = useState<string | null>(null);
   const [rStrainScope, setRStrainScope] = useState<"all" | "filtered">("all");
@@ -424,7 +436,14 @@ export function DashboardClient() {
     <div className={`${th.shell} ${demoHighContrast ? "contrast-125" : ""}`}>
       {/* Sidebar */}
       <aside className={th.sidebar}>
-        <div className={`p-4 ${th.sidebarHeaderBorder} flex items-center gap-2`}>
+        <Link
+          href="/"
+          onClick={() => setActiveNav("strains")}
+          className={`p-4 ${th.sidebarHeaderBorder} flex items-center gap-2 no-underline outline-none transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0d7377]/35 ${
+            demoLightMode ? "hover:bg-slate-50" : "hover:bg-white/[.04]"
+          }`}
+          aria-label="LIMS Console home"
+        >
           <span className="h-4 w-4 shrink-0 rounded-md bg-[#0d7377]" aria-hidden />
           <div className="min-w-0 space-y-0.5">
             <p className={`text-xs font-medium tracking-wide ${th.sidebarBrandSub} truncate`}>
@@ -441,18 +460,20 @@ export function DashboardClient() {
               {LAB_LEAD_NAME}
             </p>
           </div>
-        </div>
-        <nav className="flex-1 overflow-y-auto p-3 flex flex-col gap-1 text-sm">
+        </Link>
+        <nav className={`flex-1 overflow-y-auto p-3 flex flex-col gap-1 text-sm ${th.sidebarNavScroll}`}>
           {(
             [
               { id: "strains" as const, label: "Strain registry", icon: "Sr" },
               { id: "runs" as const, label: "Pipeline runs", icon: "Rn" },
+              { id: "pipeline" as const, label: "Pipeline scenarios", icon: "Ps" },
               { id: "reports" as const, label: "Reports", icon: "Rp" },
               { id: "projects" as const, label: "Projects", icon: "Pr" },
               { id: "r_export" as const, label: "R visuals", icon: "R" },
               { id: "import_files" as const, label: "Import files", icon: "↑" },
               { id: "send_email" as const, label: "Send email", icon: "✉" },
               { id: "slack" as const, label: "Slack", icon: "#" },
+              { id: "faq" as const, label: "FAQ", icon: "?" },
             ] as const
           ).map((item) => (
             <button
@@ -478,7 +499,12 @@ export function DashboardClient() {
         {/* Top bar */}
         <header className={th.header}>
           <div className="flex items-center gap-3 min-w-0">
-            <span className="lg:hidden h-4 w-4 shrink-0 rounded-md bg-[#0d7377]" aria-hidden />
+            <Link
+              href="/"
+              onClick={() => setActiveNav("strains")}
+              className="lg:hidden h-4 w-4 shrink-0 rounded-md bg-[#0d7377] outline-none focus-visible:ring-2 focus-visible:ring-[#0d7377]/40"
+              aria-label="LIMS Console home"
+            />
             <div>
               <p className={`text-xs font-medium tracking-wide ${th.headerKicker}`}>
                 Reference · S288C
@@ -486,12 +512,14 @@ export function DashboardClient() {
               <h1 className={`text-sm font-semibold ${th.headerTitle} truncate`}>
                 {activeNav === "strains" && "Strain registry"}
                 {activeNav === "runs" && "Pipeline runs"}
+                {activeNav === "pipeline" && "Pipeline scenarios"}
                 {activeNav === "reports" && "Automated reports"}
                 {activeNav === "projects" && "Projects"}
                 {activeNav === "r_export" && "R → chart export"}
                 {activeNav === "import_files" && "Import files"}
                 {activeNav === "send_email" && "Send email"}
                 {activeNav === "slack" && "Slack integration"}
+                {activeNav === "faq" && "FAQ"}
               </h1>
             </div>
           </div>
@@ -501,7 +529,7 @@ export function DashboardClient() {
               onClick={() => setSettingsOpen((o) => !o)}
               className={`${th.avatarPlate} cursor-pointer outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-[#0d7377]/40 focus-visible:ring-offset-2 ${th.ringOffset} ${settingsOpen ? th.menuOpenRing : ""}`}
               aria-controls="lims-demo-settings"
-              title={`${LAB_LEAD_NAME} · ${LAB_LEAD_EMAIL} — demo settings`}
+              title={`${LAB_LEAD_NAME} · ${LAB_LEAD_EMAIL} - demo settings`}
               aria-label={`${LAB_LEAD_NAME}, ${LAB_LEAD_EMAIL}. Open demo settings.`}
             >
               {LAB_LEAD_INITIALS}
@@ -558,12 +586,14 @@ export function DashboardClient() {
             [
               ["strains", "Strains"],
               ["runs", "Runs"],
+              ["pipeline", "Pipeline"],
               ["reports", "Reports"],
               ["projects", "Projects"],
               ["r_export", "R"],
               ["import_files", "Import"],
               ["send_email", "Email"],
               ["slack", "Slack"],
+              ["faq", "FAQ"],
             ] as const
           ).map(([id, label]) => (
             <button
@@ -630,10 +660,10 @@ export function DashboardClient() {
                     <button
                       type="button"
                       onClick={() => openNotify({
-                        title: "Email PI — strain summary",
+                        title: "Email PI - strain summary",
                         emailTo: "pi@yeastlab.pt",
                         emailSubject: `Strain registry summary · ${filtered.length} result${filtered.length === 1 ? "" : "s"}`,
-                        emailBody: `Hi,\n\nHere is the current strain registry summary (${filtered.length} strain${filtered.length === 1 ? "" : "s"}):\n\n${filtered.map((s) => `• ${s.id} — ${s.mutations} (${s.status})`).join("\n")}\n\nFull records available in the LIMS console.\n\nRegards,\nYeastGenomics Automation`,
+                        emailBody: `Hi,\n\nHere is the current strain registry summary (${filtered.length} strain${filtered.length === 1 ? "" : "s"}):\n\n${filtered.map((s) => `• ${s.id} - ${s.mutations} (${s.status})`).join("\n")}\n\nFull records available in the LIMS console.\n\nRegards,\nYeastGenomics Automation`,
                         slackChannel: "genomics-alerts",
                         slackText: `📋 Strain registry: ${filtered.length} strain${filtered.length === 1 ? "" : "s"} · ${filtered.filter((s) => s.status === "qc_hold").length} QC hold${filtered.filter((s) => s.status === "qc_hold").length === 1 ? "" : "s"} · ${filtered.filter((s) => s.status === "running").length} active`,
                       })}
@@ -644,10 +674,10 @@ export function DashboardClient() {
                     <button
                       type="button"
                       onClick={() => openNotify({
-                        title: "Slack — registry digest",
+                        title: "Slack - registry digest",
                         emailTo: "pi@yeastlab.pt",
                         emailSubject: `Strain registry digest · ${new Date().toISOString().slice(0, 10)}`,
-                        emailBody: `Hi,\n\nAutomated registry digest.\n\n${filtered.map((s) => `• ${s.id} — ${s.mutations} (${s.status})`).join("\n")}\n\nRegards,\nYeastGenomics Automation`,
+                        emailBody: `Hi,\n\nAutomated registry digest.\n\n${filtered.map((s) => `• ${s.id} - ${s.mutations} (${s.status})`).join("\n")}\n\nRegards,\nYeastGenomics Automation`,
                         slackChannel: "genomics-alerts",
                         slackText: `📋 Registry digest: ${filtered.length} strain${filtered.length === 1 ? "" : "s"} shown · ${filtered.filter((s) => s.status === "qc_hold").length} QC hold${filtered.filter((s) => s.status === "qc_hold").length === 1 ? "" : "s"} · ${filtered.filter((s) => s.status === "running").length} active pipeline`,
                       })}
@@ -720,12 +750,12 @@ export function DashboardClient() {
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       openNotify({
-                                        title: `Notify — QC hold ${row.id}`,
+                                        title: `Notify - QC hold ${row.id}`,
                                         emailTo: "pi@yeastlab.pt",
                                         emailSubject: `QC hold · ${row.id} awaiting review`,
                                         emailBody: `Hi,\n\nStrain ${row.id} (${row.mutations}) has been placed on QC hold.\n\nBackground: ${row.genotype}\nPhenotype: ${row.phenotype}\nLast ingest: ${row.lastRun}\n\nPlease review in the LIMS console.\n\nRegards,\nYeastGenomics Automation`,
                                         slackChannel: "qc-review",
-                                        slackText: `⚠️ QC hold: ${row.id} — ${row.mutations}. ${row.phenotype}. Manual review required.`,
+                                        slackText: `⚠️ QC hold: ${row.id} - ${row.mutations}. ${row.phenotype}. Manual review required.`,
                                       });
                                     }}
                                     className={`inline-flex items-center gap-1 rounded border px-2 py-0.5 text-[10px] font-medium transition-colors ${
@@ -743,12 +773,12 @@ export function DashboardClient() {
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       openNotify({
-                                        title: `Share record — ${row.id}`,
+                                        title: `Share record - ${row.id}`,
                                         emailTo: "pi@yeastlab.pt",
                                         emailSubject: `Strain record · ${row.id} indexed`,
                                         emailBody: `Hi,\n\nStrain ${row.id} has been indexed in LIMS.\n\nVariant: ${row.mutations}\nBackground: ${row.genotype}\nPhenotype: ${row.phenotype}\nLast ingest: ${row.lastRun}\n\nFull LIMS record available in the console.\n\nRegards,\nYeastGenomics Automation`,
                                         slackChannel: "genomics-alerts",
-                                        slackText: `✅ Strain ${row.id} indexed — ${row.mutations} · ${row.phenotype}`,
+                                        slackText: `✅ Strain ${row.id} indexed - ${row.mutations} · ${row.phenotype}`,
                                       });
                                     }}
                                     className={`${th.secondaryBtn} gap-1 px-2 py-0.5 text-[10px] font-mono`}
@@ -777,10 +807,12 @@ export function DashboardClient() {
 
           {activeNav === "runs" && (
             <div className="max-w-5xl mx-auto space-y-4">
-              <p className={`text-sm ${th.bodyText}`}>
-                Live-style run monitor. In production this streams Snakemake / Nextflow events from
-                the workstation.
-              </p>
+              <div className={`rounded-xl border p-4 ${demoLightMode ? "border-slate-200 bg-white" : "border-white/10 bg-[#243041]"}`}>
+                <p className={`text-sm ${th.bodyText}`}>
+                  Live-style run monitor for sequencing batches. In production this streams Snakemake / Nextflow
+                  events from the workstation.
+                </p>
+              </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <RunVolumeBars runs={RUNS} surface={chartSurface} />
                 <StageTimeStackBar surface={chartSurface} />
@@ -788,35 +820,46 @@ export function DashboardClient() {
               <ul className="space-y-2">
                 {RUNS.map((r) => (
                   <li key={r.id} className={th.runsCard}>
-                    <div>
-                      <p className={`font-mono text-sm ${th.runsTitle}`}>{r.id}</p>
+                    <div className="min-w-0">
+                      <p className={`text-sm font-semibold ${th.runsTitle}`}>{r.id}</p>
                       <p className={`text-xs ${th.runsMeta} mt-1`}>
                         Started {r.started} · {r.files} FASTQ pairs
                       </p>
+                      <p className={`text-xs ${th.runsStage} mt-1`}>{r.stage}</p>
+                      {r.state === "active" && (
+                        <div className={`mt-2 h-1.5 rounded-full overflow-hidden ${demoLightMode ? "bg-slate-200" : "bg-white/10"}`}>
+                          <div className="h-full w-2/3 rounded-full bg-sky-500/80 animate-pulse" />
+                        </div>
+                      )}
                     </div>
-                    <div className="flex items-center gap-2 flex-wrap justify-end">
+                    <div className="flex items-center gap-2 flex-wrap justify-end shrink-0">
                       <span
-                        className={`text-xs font-mono uppercase px-2 py-0.5 rounded border ${
+                        className={`text-xs font-medium px-2.5 py-1 rounded-full border ${
                           r.state === "ok"
-                            ? `border-[#0d7377]/30 ${th.accentText}`
+                            ? demoLightMode
+                              ? "border-teal-200 bg-teal-50 text-teal-800"
+                              : `border-[#0d7377]/30 bg-[#0d7377]/15 ${th.accentText}`
                             : r.state === "active"
-                              ? "border-sky-500/30 text-sky-300"
-                              : "border-amber-500/30 text-amber-300"
+                              ? demoLightMode
+                                ? "border-sky-200 bg-sky-50 text-sky-800"
+                                : "border-sky-500/30 bg-sky-500/10 text-sky-300"
+                              : demoLightMode
+                                ? "border-amber-200 bg-amber-50 text-amber-900"
+                                : "border-amber-500/30 bg-amber-500/10 text-amber-300"
                         }`}
                       >
-                        {r.state === "ok" ? "Done" : r.state === "active" ? "Active" : "Review"}
+                        {r.state === "ok" ? "Complete" : r.state === "active" ? "In progress" : "Needs review"}
                       </span>
-                      <span className={`text-xs ${th.runsStage}`}>{r.stage}</span>
                       {r.state === "ok" && (
                         <button
                           type="button"
                           onClick={() => openNotify({
-                            title: `Email report — ${r.id}`,
+                            title: `Email report - ${r.id}`,
                             emailTo: "pi@yeastlab.pt",
                             emailSubject: `Run ${r.id} · variant report ready`,
                             emailBody: `Hi,\n\nRun ${r.id} has completed successfully.\n\nStage: ${r.stage}\nFiles processed: ${r.files} FASTQ pairs\nStarted: ${r.started}\n\nThe full variant report is available in the LIMS console.\n\nRegards,\nYeastGenomics Automation`,
                             slackChannel: "genomics-alerts",
-                            slackText: `✅ Run ${r.id} complete — ${r.files} FASTQ pairs · ${r.stage} done. Report in LIMS.`,
+                            slackText: `✅ Run ${r.id} complete - ${r.files} FASTQ pairs · ${r.stage} done. Report in LIMS.`,
                           })}
                           className={`inline-flex items-center gap-1 rounded border border-[#0d7377]/25 bg-[#0d7377]/8 px-2 py-0.5 text-[10px] font-mono ${th.accentText} hover:bg-[#0d7377]/15 transition-colors`}
                         >
@@ -827,12 +870,12 @@ export function DashboardClient() {
                         <button
                           type="button"
                           onClick={() => openNotify({
-                            title: `QC alert — ${r.id}`,
+                            title: `QC alert - ${r.id}`,
                             emailTo: "pi@yeastlab.pt",
                             emailSubject: `QC review required · ${r.id}`,
                             emailBody: `Hi,\n\nRun ${r.id} requires manual QC review.\n\nStage: ${r.stage}\nFiles: ${r.files} FASTQ pairs\nStarted: ${r.started}\n\nPlease review the run in the LIMS console.\n\nRegards,\nYeastGenomics Automation`,
                             slackChannel: "qc-review",
-                            slackText: `⚠️ Run ${r.id} needs QC review — ${r.stage}. ${r.files} FASTQ pairs. Started ${r.started}.`,
+                            slackText: `⚠️ Run ${r.id} needs QC review - ${r.stage}. ${r.files} FASTQ pairs. Started ${r.started}.`,
                           })}
                           className="inline-flex items-center gap-1 rounded border border-amber-500/30 bg-amber-500/8 px-2 py-0.5 text-[10px] font-mono text-amber-400 hover:bg-amber-500/15 transition-colors"
                         >
@@ -843,12 +886,12 @@ export function DashboardClient() {
                         <button
                           type="button"
                           onClick={() => openNotify({
-                            title: `Progress update — ${r.id}`,
+                            title: `Progress update - ${r.id}`,
                             emailTo: "pi@yeastlab.pt",
                             emailSubject: `Run ${r.id} · pipeline active`,
                             emailBody: `Hi,\n\nRun ${r.id} is currently in progress.\n\nCurrent stage: ${r.stage}\nFiles: ${r.files} FASTQ pairs\nStarted: ${r.started}\n\nRegards,\nYeastGenomics Automation`,
                             slackChannel: "genomics-alerts",
-                            slackText: `🔄 Run ${r.id} active — ${r.stage} · ${r.files} FASTQ pairs · started ${r.started}`,
+                            slackText: `🔄 Run ${r.id} active - ${r.stage} · ${r.files} FASTQ pairs · started ${r.started}`,
                           })}
                           className="inline-flex items-center gap-1 rounded border border-sky-500/25 bg-sky-500/8 px-2 py-0.5 text-[10px] font-mono text-sky-400 hover:bg-sky-500/15 transition-colors"
                         >
@@ -861,6 +904,8 @@ export function DashboardClient() {
               </ul>
             </div>
           )}
+
+          {activeNav === "pipeline" && <PipelineSchemaPanel lightMode={demoLightMode} />}
 
           {activeNav === "reports" && (
             <div className="max-w-5xl mx-auto space-y-4">
@@ -1089,6 +1134,8 @@ export function DashboardClient() {
           {activeNav === "send_email" && <SendEmailPanel lightMode={demoLightMode} />}
 
           {activeNav === "slack" && <SlackPanel lightMode={demoLightMode} />}
+
+          {activeNav === "faq" && <FaqPanel lightMode={demoLightMode} />}
         </main>
       </div>
 

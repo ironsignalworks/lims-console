@@ -32,7 +32,7 @@ const SEED_MESSAGES: SlackMessage[] = [
   {
     id: "slk-001",
     channel: "#genomics-alerts",
-    text: "✅ Run RUN-20260411-02 complete — 12 FASTQ pairs, 1 variant of interest. Report attached.",
+    text: "✅ Run RUN-20260411-02 complete - 12 FASTQ pairs, 1 variant of interest. Report attached.",
     sentAt: "2026-04-11 06:50",
     scheduled: false,
     status: "sent",
@@ -81,7 +81,7 @@ const SEED_REMINDERS: Reminder[] = [
 ];
 
 const SLACK_TEMPLATES = [
-  { id: "run_done", label: "Run complete", text: "✅ Run {{run_id}} complete — {{files}} FASTQ pairs processed. Variant report ready in LIMS." },
+  { id: "run_done", label: "Run complete", text: "✅ Run {{run_id}} complete - {{files}} FASTQ pairs processed. Variant report ready in LIMS." },
   { id: "qc_hold", label: "QC hold alert", text: "⚠️ QC hold raised for {{strain_id}}. Reason: {{reason}}. Manual review required." },
   { id: "digest", label: "Weekly digest", text: "📊 Weekly digest: {{runs}} runs · {{strains}} strains indexed · Mean Q30 {{q30}}% · {{holds}} open QC holds." },
   { id: "custom", label: "Custom message", text: "" },
