@@ -2227,7 +2227,8 @@ function stepMatchesNodeLabel(step, labelLower) {
     return arr.some((p) => lab.includes(String(p).toLowerCase().replace(/-/g, ' ')));
   }
   const raw = (step.name || '').toLowerCase().replace(/-/g, ' ');
-  const parts = raw.split(/[\s–-()&.]+/).filter(Boolean);
+  // Keep '-' at end of the class — `–-(` is an invalid range (en-dash → '(').
+  const parts = raw.split(/[\s–()&.-]+/).filter(Boolean);
   const words = parts.filter((w) => w.length > 1);
   const hits = words.filter((w) => lab.includes(w));
   if (hits.length >= 2) return true;
@@ -2581,9 +2582,10 @@ async function renderDiagram(graphDef) {
   document.body.appendChild(shell);
 
   staging.removeAttribute('data-processed');
-  // Strip classDefs and style roles via CSS - Mermaid classDef commas conflict with rgb()/hex lists.
+  // textContent (not innerHTML): keeps "< 20" / "#channel" literal and <br/> as Mermaid syntax.
+  // innerHTML would treat "< …" as HTML tags and break parsing (Mermaid "Syntax error in text").
   const oriented = applyFlowDirectionForViewport(stripClassDefs(graphDef));
-  staging.innerHTML = normalizeMermaidGraphDefs(uniformMermaidNodeLabelLineCount(oriented));
+  staging.textContent = normalizeMermaidGraphDefs(uniformMermaidNodeLabelLineCount(oriented));
 
   try {
     await waitForDiagramFonts();
