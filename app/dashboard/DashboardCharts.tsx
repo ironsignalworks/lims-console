@@ -19,8 +19,8 @@ const chartUi = {
     s === "light"
       ? "rounded-xl border border-slate-200/90 bg-white p-4 shadow-sm transition-[border-color,box-shadow] duration-300 hover:border-slate-300/90 hover:shadow-md"
       : "rounded-xl border border-white/[.08] bg-[#243041] p-4 transition-[border-color,box-shadow] duration-300 hover:border-white/[.12] hover:shadow-sm",
-  sub: (s: ChartSurface) => (s === "light" ? "text-slate-500" : "text-zinc-500"),
-  sub9: (s: ChartSurface) => (s === "light" ? "text-slate-600" : "text-zinc-500"),
+  sub: (s: ChartSurface) => (s === "light" ? "text-slate-600" : "text-slate-300"),
+  sub9: (s: ChartSurface) => (s === "light" ? "text-slate-600" : "text-slate-300"),
   metricBox: (s: ChartSurface) =>
     s === "light"
       ? "rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 w-full h-full"
@@ -34,9 +34,9 @@ const chartUi = {
       ? "rounded-lg border border-[#0d7377]/20 bg-[#0d7377]/[.06] px-2.5 py-1.5 w-full h-full"
       : "rounded-lg border border-[#0d7377]/20 bg-[#0d7377]/6 px-2.5 py-1.5 w-full h-full",
   value: (s: ChartSurface) => (s === "light" ? "text-slate-900" : "text-white"),
-  legend: (s: ChartSurface) => (s === "light" ? "text-slate-500" : "text-zinc-400"),
-  legendHi: (s: ChartSurface, on: boolean) => (on ? (s === "light" ? "text-slate-900" : "text-zinc-200") : ""),
-  legendNum: (s: ChartSurface) => (s === "light" ? "text-slate-700" : "text-zinc-300"),
+  legend: (s: ChartSurface) => (s === "light" ? "text-slate-600" : "text-slate-300"),
+  legendHi: (s: ChartSurface, on: boolean) => (on ? (s === "light" ? "text-slate-900" : "text-slate-100") : ""),
+  legendNum: (s: ChartSurface) => (s === "light" ? "text-slate-700" : "text-slate-300"),
   barTrack: (s: ChartSurface) =>
     s === "light" ? "h-4 rounded-full bg-slate-200/90 overflow-hidden" : "h-4 rounded-full bg-slate-700/50 overflow-hidden",
   barLabel: (s: ChartSurface, active: boolean) =>
@@ -44,11 +44,11 @@ const chartUi = {
       active
         ? s === "light" ? "text-[#0d7377]" : "text-[#5eead4]"
         : s === "light"
-          ? "text-slate-500 group-hover:text-slate-700"
-          : "text-zinc-600 group-hover:text-zinc-400"
+          ? "text-slate-600 group-hover:text-slate-800"
+          : "text-slate-400 group-hover:text-slate-200"
     }`,
   gridLine: (s: ChartSurface) => (s === "light" ? "rgba(15,23,42,0.09)" : "rgba(255,255,255,0.06)"),
-  axis: (s: ChartSurface) => (s === "light" ? "text-slate-500" : "text-zinc-600"),
+  axis: (s: ChartSurface) => (s === "light" ? "text-slate-600" : "text-slate-300"),
   /** Vertical cursor on Q30 sparkline */
   sparkCrosshair: (s: ChartSurface) =>
     s === "light" ? "rgba(13,115,119,0.45)" : "rgba(13,115,119,0.45)",

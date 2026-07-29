@@ -485,7 +485,15 @@ export function DashboardClient() {
               }`}
             >
               <span
-                className={`text-[10px] w-5 text-center font-medium tracking-tight ${demoLightMode ? "text-slate-400" : "text-slate-500"}`}
+                className={`text-[10px] w-5 text-center font-medium tracking-tight ${
+                  activeNav === item.id
+                    ? demoLightMode
+                      ? "text-[#0d7377]"
+                      : "text-[#5eead4]"
+                    : demoLightMode
+                      ? "text-slate-600"
+                      : "text-slate-300"
+                }`}
               >
                 {item.icon}
               </span>
@@ -528,19 +536,20 @@ export function DashboardClient() {
               type="button"
               onClick={() => setSettingsOpen((o) => !o)}
               className={`${th.avatarPlate} cursor-pointer outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-[#0d7377]/40 focus-visible:ring-offset-2 ${th.ringOffset} ${settingsOpen ? th.menuOpenRing : ""}`}
+              aria-expanded={settingsOpen}
+              aria-haspopup="true"
               aria-controls="lims-demo-settings"
               title={`${LAB_LEAD_NAME} · ${LAB_LEAD_EMAIL} - demo settings`}
               aria-label={`${LAB_LEAD_NAME}, ${LAB_LEAD_EMAIL}. Open demo settings.`}
             >
               {LAB_LEAD_INITIALS}
             </button>
-            {settingsOpen && (
-              <div
-                id="lims-demo-settings"
-                className={th.settingsMenu}
-                role="region"
-                aria-label="Demo settings"
-              >
+            <div
+              id="lims-demo-settings"
+              className={`${th.settingsMenu} ${settingsOpen ? "" : "hidden"}`}
+              role="region"
+              aria-label="Demo settings"
+            >
                 <p className={`text-[10px] font-medium tracking-wide ${th.settingsMenuTitle} mb-2 px-0.5`}>
                   Demo settings
                 </p>
@@ -576,7 +585,6 @@ export function DashboardClient() {
                   Client: {LAB_LEAD_NAME}. Preferences stay in this browser only.
                 </p>
               </div>
-            )}
           </div>
         </header>
 
@@ -720,7 +728,7 @@ export function DashboardClient() {
                             <td className={`px-4 py-3 font-mono ${th.strainId}`}>
                               <span className="inline-flex items-center gap-2">
                                 {row.id}
-                                <span className={`text-xs font-mono ${th.bodyTextSoft} ${th.hintArrow} transition-colors max-[480px]:sr-only`}>
+                                <span className={`text-xs font-mono ${th.hintArrow} transition-colors max-[480px]:sr-only`}>
                                   record →
                                 </span>
                               </span>
@@ -800,7 +808,7 @@ export function DashboardClient() {
               </div>
 
               <p className={`text-xs ${th.footNote} font-mono text-center`}>
-                Simulated data for pitch preview; not connected to live sequencing infrastructure.
+                Simulated data for preview; not connected to live sequencing infrastructure.
               </p>
             </div>
           )}
@@ -968,7 +976,7 @@ export function DashboardClient() {
               <div>
                 <p className={`text-sm ${th.bodyText} leading-relaxed`}>
                   Export a single R script that mirrors the dashboard demo charts with{" "}
-                  <span className={demoLightMode ? "text-slate-800" : "text-zinc-300"}>ggplot2</span>. Running it
+                  <span className={demoLightMode ? "text-slate-800" : "text-slate-200"}>ggplot2</span>. Running it
                   writes six PNGs into{" "}
                   <code className={`text-sm font-mono ${th.accentSoft}`}>lims_r_export/</code>{" "}
                   next to the script, useful for slides, methods figures, or offline QC packs.
@@ -977,7 +985,7 @@ export function DashboardClient() {
                   Requires R 4.0+ and ggplot2: install.packages(&quot;ggplot2&quot;)
                 </p>
                 <p className={`text-xs ${th.footNote} mt-2 leading-relaxed`}>
-                  <strong className={demoLightMode ? "text-slate-700" : "text-zinc-400"}>Import file → R:</strong>{" "}
+                  <strong className={demoLightMode ? "text-slate-700" : "text-slate-300"}>Import file → R:</strong>{" "}
                   pick any file; its UTF-8 text is turned into R that calls{" "}
                   <code className={`text-sm font-mono ${th.accentSoft}`}>writeLines()</code> to recreate it beside
                   your working directory. Large files are truncated with a comment in the generated block.

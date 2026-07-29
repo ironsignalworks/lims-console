@@ -5,9 +5,9 @@ export function PipelineSchemaPanel({ lightMode = true }: { lightMode?: boolean 
   const cardClass = lightMode
     ? "rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
     : "rounded-xl border border-white/10 bg-[#1a2332] p-4";
-  const muted = lightMode ? "text-slate-600" : "text-zinc-400";
-  const label = lightMode ? "text-slate-500" : "text-zinc-500";
-  const title = lightMode ? "text-slate-900" : "text-zinc-100";
+  const muted = lightMode ? "text-slate-600" : "text-slate-300";
+  const label = lightMode ? "text-slate-600" : "text-slate-300";
+  const title = lightMode ? "text-slate-900" : "text-slate-100";
   const frameClass = lightMode
     ? "rounded-xl border border-slate-200 overflow-hidden bg-[#f1f4f8] shadow-sm"
     : "rounded-xl border border-white/10 overflow-hidden bg-[#1a2332]";
@@ -82,7 +82,7 @@ export function PipelineSchemaPanel({ lightMode = true }: { lightMode?: boolean 
           className={
             lightMode
               ? "inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-              : "inline-flex items-center gap-2 rounded-lg border border-white/20 bg-[#1a2332] px-3 py-1.5 text-xs font-medium text-zinc-200 hover:bg-[#223146] transition-colors"
+              : "inline-flex items-center gap-2 rounded-lg border border-white/20 bg-[#1a2332] px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-[#223146] transition-colors"
           }
         >
           Open full-screen explorer
@@ -100,7 +100,7 @@ export function PipelineSchemaPanel({ lightMode = true }: { lightMode?: boolean 
               : "px-3 py-2 border-b border-white/10 bg-[#222c3a]"
           }
         >
-          <p className={`text-xs ${lightMode ? "text-slate-500" : "text-slate-400"}`}>
+          <p className={`text-xs ${lightMode ? "text-slate-600" : "text-slate-300"}`}>
             Interactive scenario workspace
           </p>
         </div>

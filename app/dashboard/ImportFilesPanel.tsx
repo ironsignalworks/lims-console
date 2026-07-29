@@ -227,7 +227,7 @@ export function ImportFilesPanel({ lightMode = false }: { lightMode?: boolean })
             Drop files or an entire folder here
           </div>
           {rows.length > 0 && (
-            <p className="text-sm text-zinc-600 font-mono">
+            <p className={`text-sm ${th.bodyTextSoft} font-mono`}>
               {rows.length} file{rows.length === 1 ? "" : "s"}
               {folderDepth > 1 ? ` · max depth ${folderDepth} path segments` : ""}
             </p>
