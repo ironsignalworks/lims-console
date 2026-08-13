@@ -70,10 +70,10 @@ Domain framing: **YeastGenomics Lab · NOVA FCT** (demo identity; easy to rebran
 
 ```mermaid
 flowchart TB
-  subgraph Client["Next.js App Router · Client UI"]
+  subgraph Client ["Next.js App Router - Client UI"]
     Home["app/page.tsx"]
     Dash["DashboardClient"]
-    Panels["Feature panels\nProjects · Import · Email · Slack · FAQ"]
+    Panels["Feature panels: Projects, Import, Email, Slack, FAQ"]
     Charts["DashboardCharts"]
     Theme["dashboardTheme tokens"]
     Home --> Dash
@@ -82,15 +82,15 @@ flowchart TB
     Dash --> Theme
   end
 
-  subgraph Pipeline["Pipeline explorer"]
+  subgraph Pipeline ["Pipeline explorer"]
     SchemaPanel["PipelineSchemaPanel"]
-    Embed["public/pipeline-schema.html\nMermaid · simulation · LIMS DB view"]
-    SchemaPanel -->|iframe embed| Embed
+    Embed["pipeline-schema.html - Mermaid sim + LIMS DB"]
+    SchemaPanel -->|"iframe embed"| Embed
   end
 
   Dash --> SchemaPanel
 
-  subgraph Data["Demo data layer · in-memory"]
+  subgraph Data ["Demo data layer - in-memory"]
     Strains["STRAINS / RUNS"]
     Meta["STRAIN_LIMS_META"]
     FAQ["faqContent"]
