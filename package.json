@@ -1,12 +1,35 @@
 {
   "name": "lims-console",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "description": "Interactive LIMS console demo for yeast genomics — strain registry, pipeline scenarios (Mermaid), reports, projects, R export, and simulated lab integrations.",
+  "license": "MIT",
+  "author": "Iron Signal Works",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ironsignalworks/lims-console.git"
+  },
+  "keywords": [
+    "lims",
+    "nextjs",
+    "react",
+    "typescript",
+    "bioinformatics",
+    "genomics",
+    "dashboard",
+    "mermaid",
+    "demo"
+  ],
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:e2e": "playwright test",
+    "screenshots": "node scripts/capture-screenshots.mjs"
   },
   "dependencies": {
     "next": "16.2.3",
@@ -14,13 +37,17 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.0.5",
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
+    "happy-dom": "^20.11.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.10"
   }
 }

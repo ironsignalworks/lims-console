@@ -350,8 +350,15 @@ export function DashboardClient() {
         setSettingsOpen(false);
       }
     };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSettingsOpen(false);
+    };
     document.addEventListener("mousedown", onDoc);
-    return () => document.removeEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
   }, [settingsOpen]);
 
   const persistToggle = (key: string, value: boolean) => {
@@ -461,7 +468,11 @@ export function DashboardClient() {
             </p>
           </div>
         </Link>
-        <nav className={`flex-1 overflow-y-auto p-3 flex flex-col gap-1 text-sm ${th.sidebarNavScroll}`}>
+        <nav
+          className={`flex-1 overflow-y-auto p-3 flex flex-col gap-1 text-sm ${th.sidebarNavScroll}`}
+          data-testid="sidebar-nav"
+          aria-label="Primary"
+        >
           {(
             [
               { id: "strains" as const, label: "Strain registry", icon: "Sr" },
@@ -479,6 +490,8 @@ export function DashboardClient() {
             <button
               key={item.id}
               type="button"
+              data-testid={`nav-${item.id}`}
+              aria-current={activeNav === item.id ? "page" : undefined}
               onClick={() => setActiveNav(item.id)}
               className={`flex items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors ${
                 activeNav === item.id ? th.navActive : th.navInactive
@@ -517,7 +530,7 @@ export function DashboardClient() {
               <p className={`text-xs font-medium tracking-wide ${th.headerKicker}`}>
                 Reference · S288C
               </p>
-              <h1 className={`text-sm font-semibold ${th.headerTitle} truncate`}>
+              <h1 className={`text-sm font-semibold ${th.headerTitle} truncate`} data-testid="page-title">
                 {activeNav === "strains" && "Strain registry"}
                 {activeNav === "runs" && "Pipeline runs"}
                 {activeNav === "pipeline" && "Pipeline scenarios"}
@@ -534,6 +547,7 @@ export function DashboardClient() {
           <div ref={settingsWrapRef} className="flex items-center gap-2 shrink-0 relative">
             <button
               type="button"
+              data-testid="settings-avatar"
               onClick={() => setSettingsOpen((o) => !o)}
               className={`${th.avatarPlate} cursor-pointer outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-[#0d7377]/40 focus-visible:ring-offset-2 ${th.ringOffset} ${settingsOpen ? th.menuOpenRing : ""}`}
               aria-expanded={settingsOpen}

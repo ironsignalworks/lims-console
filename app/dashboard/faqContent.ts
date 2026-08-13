@@ -148,7 +148,7 @@ export const FAQ_SECTIONS: FaqSection[] = [
         q: "What is the tech stack?",
         a: [
           "Next.js 16 (App Router) · React 19 · Tailwind CSS 4 · TypeScript.",
-          "Pipeline diagrams: public/pipeline-schema.html + Mermaid 11 (CDN).",
+          "Pipeline diagrams: public/pipeline-schema.html (+ .css / scenarios.js / lims-db.js) + Mermaid 11 (CDN).",
           "Charts: custom SVG / React in DashboardCharts.tsx.",
           "Deploy target: Vercel as a standalone project.",
           "No separate API server or database in this demo repo.",
@@ -171,7 +171,7 @@ export const FAQ_SECTIONS: FaqSection[] = [
         a: [
           "app/dashboard/DashboardClient.tsx - main shell and most views.",
           "app/dashboard/PipelineSchemaPanel.tsx - pipeline embed framing.",
-          "public/pipeline-schema.html - scenario simulator + LIMS DB demo.",
+          "public/pipeline-schema.html - shell; scenarios.js + lims-db.js + .css hold data/styles.",
           "app/dashboard/ProjectsWorkspace.tsx - projects (browser storage).",
           "app/dashboard/*Panel.tsx - import, email, Slack, FAQ.",
           "app/dashboard/dashboardTheme.ts - light/dark tokens.",
